@@ -148,6 +148,7 @@ body {
     justify-content: center;
     position: relative;
     background: linear-gradient(45deg, var(--dark-bg), var(--darker-bg));
+    margin-top: 50px;
 }
 
 .matrix-bg {
