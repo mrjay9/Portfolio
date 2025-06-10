@@ -1,3 +1,4 @@
+
 /* Root Variables */
 :root {
     --neon-blue: #00ffff;
@@ -148,7 +149,7 @@ body {
     justify-content: center;
     position: relative;
     background: linear-gradient(45deg, var(--dark-bg), var(--darker-bg));
-    margin-top: 50px;
+    margin-top: 55px;
 }
 
 .matrix-bg {
