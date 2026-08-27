@@ -127,20 +127,45 @@ function addGlitchEffect() {
 }
 
 // Contact form handler
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
     e.preventDefault();
-    
-    const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData);
-    
-    // Simulate form submission
-    console.log('Form data:', data);
-    
-    // Show success popup
-    showPopup();
-    
-    // Reset form
-    contactForm.reset();
+
+    const form = e.target;
+    const submitButton = form.querySelector('.btn-submit');
+
+    // Disable button while sending
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            // Only show success after Formspree confirms submission
+            showPopup();
+            form.reset();
+        } else {
+            const data = await response.json().catch(() => null);
+
+            console.error('Formspree error:', data);
+
+            alert('Message could not be sent. Please try again.');
+        }
+
+    } catch (error) {
+        console.error('Submission error:', error);
+        alert('Network error. Please check your internet connection and try again.');
+    } finally {
+        // Restore button
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Execute Send';
+    }
 }
 
 // Show success popup
